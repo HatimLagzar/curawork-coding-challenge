@@ -25,11 +25,13 @@ class UserRepository extends AbstractEloquentRepository
         return $this->getQueryBuilder()
                     ->whereNotExists(function ($db) use ($userId) {
                         $db->selectRaw(1)
+                           ->from(Relationship::TABLE)
                            ->where(Relationship::USER_ID_1_COLUMN, $userId)
                            ->orWhere(Relationship::USER_ID_2_COLUMN, $userId);
                     })
                     ->whereNotExists(function ($db) use ($userId) {
                         $db->selectRaw(1)
+                           ->from(Invitation::TABLE)
                            ->where(Invitation::SENT_TO_COLUMN, $userId)
                            ->orWhere(Invitation::SENT_BY_COLUMN, $userId);
                     })
