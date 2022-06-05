@@ -23,6 +23,7 @@ class UserRepository extends AbstractEloquentRepository
     public function getSuggestions(string $userId): Collection|array
     {
         return $this->getQueryBuilder()
+                    ->whereNot(User::ID_COLUMN, $userId)
                     ->whereNotExists(function ($db) use ($userId) {
                         $db->selectRaw(1)
                            ->from(Relationship::TABLE)
