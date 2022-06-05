@@ -9,6 +9,9 @@
 
   <div class="container">
     <x-dashboard />
-    <x-network_connections />
+    <x-network_connections :suggestions="$suggestions"
+                           :sentRequests="$sentRequests"
+                           :relationships="$relationships"
+                           :receivedRequests="$receivedRequests"/>
   </div>
 @endsection
