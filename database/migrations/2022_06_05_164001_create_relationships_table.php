@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -15,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('relationships', function (Blueprint $table) {
             $table->uuid('id');
-            $table->unsignedBigInteger('user_id1');
-            $table->unsignedBigInteger('user_id2');
+            $table->string('user_id1');
+            $table->string('user_id2');
             $table->timestamps();
         });
     }
