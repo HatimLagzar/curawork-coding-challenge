@@ -4,6 +4,7 @@ namespace App\Repositories\Invitation;
 
 use App\Models\Invitation;
 use App\Repositories\AbstractEloquentRepository;
+use Illuminate\Database\Eloquent\Collection;
 
 class InvitationRepository extends AbstractEloquentRepository
 {
@@ -18,6 +19,30 @@ class InvitationRepository extends AbstractEloquentRepository
     {
         return $this->getQueryBuilder()
                     ->create($attributes);
+    }
+
+    /**
+     * @param  string  $userId
+     *
+     * @return Collection|Invitation[]
+     */
+    public function getSentBy(string $userId): Collection|array
+    {
+        return $this->getQueryBuilder()
+                    ->where(Invitation::SENT_BY_COLUMN, $userId)
+                    ->get();
+    }
+
+    /**
+     * @param  string  $userId
+     *
+     * @return Collection|Invitation[]
+     */
+    public function getSentTo(string $userId): Collection|array
+    {
+        return $this->getQueryBuilder()
+                    ->where(Invitation::SENT_TO_COLUMN, $userId)
+                    ->get();
     }
 
     protected function getModelClass(): string
