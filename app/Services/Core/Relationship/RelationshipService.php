@@ -3,7 +3,9 @@
 namespace App\Services\Core\Relationship;
 
 use App\Models\Relationship;
+use App\Models\User;
 use App\Repositories\Relationship\RelationshipRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 
 class RelationshipService
@@ -18,6 +20,16 @@ class RelationshipService
     public function findById(string $id): ?Relationship
     {
         return $this->relationshipRepository->findById($id);
+    }
+
+    /**
+     * @param  User  $user
+     *
+     * @return Collection|Relationship[]
+     */
+    public function getUserRelationships(User $user): Collection|array
+    {
+        return $this->relationshipRepository->getUserRelationships($user->getId());
     }
 
     public function create(array $attributes): Relationship
