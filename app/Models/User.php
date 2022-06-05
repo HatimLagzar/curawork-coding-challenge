@@ -28,7 +28,7 @@ class User extends ModelUuid implements AuthenticatableContract, AuthorizableCon
     public const TWO_FACTOR_SECRET_COLUMN = 'two_factor_secret';
     public const TWO_FACTOR_RECOVERY_CODES = 'two_factor_recovery_codes';
     public const TWO_FACTOR_CONFIRMED_AT_COLUMN = 'two_factor_confirmed_at';
-    public const REMEMBER_TOKEN_COLUMN = 'remember_me';
+    public const REMEMBER_TOKEN_COLUMN = 'remember_token';
     public const CREATED_AT_COLUMN = 'created_at';
     public const UPDATED_AT_COLUMN = 'updated_at';
 
