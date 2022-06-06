@@ -28,6 +28,8 @@ class Invitation extends ModelUuid
         self::UPDATED_AT_COLUMN => 'datetime',
     ];
 
+    private ?User $otherUser = null;
+
     public function getId(): string
     {
         return $this->getAttribute(self::ID_COLUMN);
@@ -51,5 +53,17 @@ class Invitation extends ModelUuid
     public function getUpdatedAt(): ?Carbon
     {
         return $this->getAttribute(self::UPDATED_AT_COLUMN);
+    }
+
+    public function getOtherUser(): ?User
+    {
+        return $this->otherUser;
+    }
+
+    public function setOtherUser(?User $otherUser): self
+    {
+        $this->otherUser = $otherUser;
+
+        return $this;
     }
 }

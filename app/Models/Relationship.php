@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Relationship extends ModelUuid
@@ -28,6 +29,13 @@ class Relationship extends ModelUuid
         self::UPDATED_AT_COLUMN => 'datetime',
     ];
 
+    private ?User $otherUser = null;
+
+    /**
+     * @var Relationship[]|array|Collection
+     */
+    private null|array|Collection $commonConnections = null;
+
     public function getId(): string
     {
         return $this->getAttribute(self::ID_COLUMN);
@@ -51,5 +59,34 @@ class Relationship extends ModelUuid
     public function getUpdatedAt(): ?Carbon
     {
         return $this->getAttribute(self::UPDATED_AT_COLUMN);
+    }
+
+    public function setOtherUser(?User $otherUser): self
+    {
+        $this->otherUser = $otherUser;
+
+        return $this;
+    }
+
+    public function getOtherUser(): ?User
+    {
+        return $this->otherUser;
+    }
+
+    /**
+     * @param  Collection|Relationship[]  $commonConnections
+     *
+     * @return $this
+     */
+    public function setCommonConnections(Collection|array $commonConnections): self
+    {
+        $this->commonConnections = $commonConnections;
+
+        return $this;
+    }
+
+    public function getCommonConnections(): array|Collection|null
+    {
+        return $this->commonConnections;
     }
 }
