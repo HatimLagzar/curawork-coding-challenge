@@ -27,14 +27,26 @@ class UserRepository extends AbstractEloquentRepository
                     ->whereNotExists(function ($db) use ($userId) {
                         $db->selectRaw(1)
                            ->from(Relationship::TABLE)
-                           ->where(Relationship::USER_ID_1_COLUMN, $userId)
-                           ->orWhere(Relationship::USER_ID_2_COLUMN, $userId);
+                           ->where(function ($db) use ($userId) {
+                               $db->where(Relationship::USER_ID_1_COLUMN, $userId)
+                                  ->orWhereRaw(Relationship::USER_ID_1_COLUMN.'='.sprintf('%s.%s', User::TABLE, User::ID_COLUMN));
+                           })
+                           ->where(function ($db) use ($userId) {
+                               $db->where(Relationship::USER_ID_2_COLUMN, $userId)
+                                  ->orWhereRaw(Relationship::USER_ID_2_COLUMN.'='.sprintf('%s.%s', User::TABLE, User::ID_COLUMN));
+                           });
                     })
                     ->whereNotExists(function ($db) use ($userId) {
                         $db->selectRaw(1)
                            ->from(Invitation::TABLE)
-                           ->where(Invitation::SENT_TO_COLUMN, $userId)
-                           ->orWhere(Invitation::SENT_BY_COLUMN, $userId);
+                           ->where(function ($db) use ($userId) {
+                               $db->where(Invitation::SENT_TO_COLUMN, $userId)
+                                  ->whereRaw(Invitation::SENT_BY_COLUMN.'='.sprintf('%s.%s', User::TABLE, User::ID_COLUMN));
+                           })
+                           ->orWhere(function ($db) use ($userId) {
+                               $db->where(Invitation::SENT_BY_COLUMN, $userId)
+                                  ->whereRaw(Invitation::SENT_TO_COLUMN.'='.sprintf('%s.%s', User::TABLE, User::ID_COLUMN));
+                           });
                     })
                     ->get();
     }
